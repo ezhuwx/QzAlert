@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">QzAlert</string>
+    <string name="warm_tip">温馨提示</string>
+    <string name="chance">取消</string>
+    <string name="confirm_name">确定</string>
+    <string name="known">我知道了</string>
+</resources>
