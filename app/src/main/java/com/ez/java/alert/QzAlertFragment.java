@@ -201,7 +201,7 @@ public class QzAlertFragment extends DialogFragment {
         if (isNegativeButtonShow && !isNatureButtonShow && !isPositiveButtonShow) {
             /*left*/
             mBinding.alertLeftButtonTv.setTextColor(leftColor != -1
-                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.colorAccent));
+                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.positive_color));
             mBinding.alertLeftButtonTv.setText(leftMessageId == -1 ? leftMessage : context.getString(leftMessageId));
             mBinding.alertMiddleButtonTv.setVisibility(View.GONE);
             mBinding.alertRightButtonTv.setVisibility(View.GONE);
@@ -210,7 +210,7 @@ public class QzAlertFragment extends DialogFragment {
         } else if (!isNegativeButtonShow && isNatureButtonShow && !isPositiveButtonShow) {
             /*middle*/
             mBinding.alertMiddleButtonTv.setTextColor(middleColor != -1
-                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.colorAccent));
+                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.positive_color));
             mBinding.alertMiddleButtonTv.setText(middleMessageId == -1 ? middleMessage : context.getString(middleMessageId));
             mBinding.alertLeftButtonTv.setVisibility(View.GONE);
             mBinding.alertRightButtonTv.setVisibility(View.GONE);
@@ -219,7 +219,7 @@ public class QzAlertFragment extends DialogFragment {
         } else if (!isNegativeButtonShow && !isNatureButtonShow && isPositiveButtonShow) {
             /*right*/
             mBinding.alertRightButtonTv.setTextColor(rightColor != -1
-                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.colorAccent));
+                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.positive_color));
             mBinding.alertRightButtonTv.setText(rightMessageId == -1 ? rightMessage : context.getString(rightMessageId));
             mBinding.alertMiddleButtonTv.setVisibility(View.GONE);
             mBinding.alertLeftButtonTv.setVisibility(View.GONE);
@@ -228,43 +228,43 @@ public class QzAlertFragment extends DialogFragment {
         } else if (isNegativeButtonShow && isNatureButtonShow && !isPositiveButtonShow) {
             /*left & middle*/
             mBinding.alertLeftButtonTv.setTextColor(leftColor != -1
-                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.line));
+                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.negative_color));
             mBinding.alertLeftButtonTv.setText(leftMessageId == -1 ? leftMessage : context.getString(leftMessageId));
             mBinding.alertMiddleButtonTv.setTextColor(middleColor != -1
-                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.colorAccent));
+                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.positive_color));
             mBinding.alertMiddleButtonTv.setText(middleMessageId == -1 ? middleMessage : context.getString(middleMessageId));
             mBinding.alertRightButtonTv.setVisibility(View.GONE);
             mBinding.lineRightV.setVisibility(View.GONE);
         } else if (isNegativeButtonShow && !isNatureButtonShow) {
             /*left & right*/
             mBinding.alertLeftButtonTv.setTextColor(leftColor != -1
-                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.line));
+                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.negative_color));
             mBinding.alertLeftButtonTv.setText(leftMessageId == -1 ? leftMessage : context.getString(leftMessageId));
             mBinding.alertRightButtonTv.setTextColor(rightColor != -1
-                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.colorAccent));
+                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.positive_color));
             mBinding.alertRightButtonTv.setText(rightMessageId == -1 ? rightMessage : context.getString(rightMessageId));
             mBinding.alertMiddleButtonTv.setVisibility(View.GONE);
             mBinding.lineRightV.setVisibility(View.GONE);
         } else if (!isNegativeButtonShow && isNatureButtonShow) {
             /*middle right*/
             mBinding.alertMiddleButtonTv.setTextColor(middleColor != -1
-                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.line));
+                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.negative_color));
             mBinding.alertMiddleButtonTv.setText(middleMessageId == -1 ? middleMessage : context.getString(middleMessageId));
             mBinding.alertRightButtonTv.setTextColor(rightColor != -1
-                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.colorAccent));
+                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.positive_color));
             mBinding.alertRightButtonTv.setText(rightMessageId == -1 ? rightMessage : context.getString(rightMessageId));
             mBinding.alertLeftButtonTv.setVisibility(View.GONE);
             mBinding.lineRightV.setVisibility(View.GONE);
         } else if (isNegativeButtonShow) {
             /*left middle right*/
             mBinding.alertLeftButtonTv.setTextColor(leftColor != -1
-                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.colorAccent));
+                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.negative_color));
             mBinding.alertLeftButtonTv.setText(leftMessageId == -1 ? leftMessage : context.getString(leftMessageId));
             mBinding.alertMiddleButtonTv.setTextColor(middleColor != -1
-                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.colorAccent));
+                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.positive_color));
             mBinding.alertMiddleButtonTv.setText(middleMessageId == -1 ? middleMessage : context.getString(middleMessageId));
             mBinding.alertRightButtonTv.setTextColor(rightColor != -1
-                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.colorAccent));
+                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.positive_color));
             mBinding.alertRightButtonTv.setText(rightMessageId == -1 ? rightMessage : context.getString(rightMessageId));
         } else {
             /*none*/
