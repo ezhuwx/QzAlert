@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#FF000000</color>
+    <color name="positive_color">#FFFFFFFF</color>
+    <color name="negative_color">#999999</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colorLightPrimary">#000000</color>
+    <color name="list_bg" >#F5F5F5</color>
+    <color name="stroke">#ffffff</color>
+    <color name="black_in_light_bg">#000000</color>
+</resources>

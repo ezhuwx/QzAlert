@@ -3,5 +3,5 @@
     <stroke
         android:width="0.5dp"
         android:color="@color/list_bg" />
-    <solid android:color="@color/white" />
+    <solid android:color="@color/white_in_deep_bg" />
 </shape>

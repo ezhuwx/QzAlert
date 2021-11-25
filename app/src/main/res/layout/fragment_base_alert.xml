@@ -53,7 +53,7 @@
             android:maxLength="50"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:textColor="@color/black"
+            android:textColor="@color/black_in_light_bg"
             android:textSize="14sp"
             android:visibility="gone" />
     </RelativeLayout>
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/alert_content_rl"
-        android:background="@color/line" />
+        android:background="@color/stroke" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,13 +77,15 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/negative_color"
             android:textSize="14sp" />
 
         <View
             android:id="@+id/line_left_v"
             android:layout_width="1dp"
             android:layout_height="50dp"
-            android:background="@color/line" />
+            android:background="@color/stroke" />
 
         <TextView
             android:id="@+id/alert_middle_button_tv"
@@ -91,14 +93,15 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/colorAccent"
+            android:text="@string/app_name"
+            android:textColor="@color/positive_color"
             android:textSize="14sp" />
 
         <View
             android:id="@+id/line_right_v"
             android:layout_width="1dp"
             android:layout_height="50dp"
-            android:background="@color/line" />
+            android:background="@color/stroke" />
 
         <TextView
             android:id="@+id/alert_right_button_tv"
@@ -106,7 +109,8 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/colorAccent"
+            android:text="@string/app_name"
+            android:textColor="@color/positive_color"
             android:textSize="14sp" />
     </LinearLayout>
 
