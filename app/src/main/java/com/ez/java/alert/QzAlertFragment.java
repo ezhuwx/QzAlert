@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.InputFilter;
 import android.text.SpannableString;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ public class QzAlertFragment extends DialogFragment {
     private int editMaxLength = -1;
     private int editContentId = -1;
     private String editContent = "";
+    private int gravity = Gravity.CENTER;
     private View contentView;
     private boolean isAnimation = true;
     private boolean isShowEdit = false;
@@ -83,7 +85,7 @@ public class QzAlertFragment extends DialogFragment {
     private OnAlertShowListener showListener;
     private OnAlertDismissListener dismissListener;
     private int height = ViewGroup.LayoutParams.WRAP_CONTENT;
-    private int width = 810;
+    private int width = 230;
     private boolean isFirstStart = false;
     private FragmentBaseAlertBinding mBinding;
 
@@ -124,7 +126,9 @@ public class QzAlertFragment extends DialogFragment {
             if (isAnimation) {
                 window.setWindowAnimations(R.style.animate_dialog);
             }
-            window.setLayout(width, height);
+            int realWidth = width > 0 ? AutoSizeUtils.dp2px(requireContext(), width) : width;
+            int realHeight = height > 0 ? AutoSizeUtils.dp2px(requireContext(), height) : height;
+            window.setLayout(realWidth, realHeight);
         }
         if (isShowEdit) {
             isKeyBoardShown = true;
@@ -138,11 +142,10 @@ public class QzAlertFragment extends DialogFragment {
     private void initView() {
         if (getLayoutId() == R.layout.fragment_base_alert) {
             //默认参数
-            title = getString(R.string.warm_tip);
-            leftMessage = getString(R.string.chance);
-            rightMessage = getString(R.string.confirm_name);
-            middleMessage = getString(R.string.known);
-            width = AutoSizeUtils.dp2px(requireContext(), 270);
+            title = title == null ? getString(R.string.warm_tip) : title;
+            leftMessage = leftMessage == null ? getString(R.string.chance) : leftMessage;
+            rightMessage = rightMessage == null ? getString(R.string.confirm_name) : rightMessage;
+            middleMessage = middleMessage == null ? getString(R.string.known) : middleMessage;
             /*标题*/
             if (isShowTitle) {
                 mBinding.alertTitleTv.setText(titleId == -1 ? title : context.getString(titleId));
@@ -157,6 +160,8 @@ public class QzAlertFragment extends DialogFragment {
                 }
                 mBinding.alertContentTv.setVisibility(View.VISIBLE);
             }
+            //Gravity
+            mBinding.alertContentTv.setGravity(gravity);
             /*显示编辑框*/
             if (isShowEdit) {
                 if (isShowContent) {
@@ -363,7 +368,9 @@ public class QzAlertFragment extends DialogFragment {
         return this;
     }
 
-    /***设置编辑框内容并显示编辑框*/
+    /**
+     * 设置编辑框内容并显示编辑框
+     */
     public QzAlertFragment setEditText(String editContent) {
         this.editContent = editContent;
         isShowEdit = true;
@@ -404,6 +411,11 @@ public class QzAlertFragment extends DialogFragment {
                         mBinding.alertContentEt.getText().toString());
             }
         });
+    }
+
+    public QzAlertFragment setContentGravity(int gravity) {
+        this.gravity = gravity;
+        return this;
     }
 
 

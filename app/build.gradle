@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'com.android.library'
 }
@@ -8,8 +10,8 @@ android {
     defaultConfig {
         minSdk 23
         targetSdk 31
-        versionCode 1110
-        versionName "0.1.1"
+        versionCode 1310
+        versionName "0.1.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,6 +28,18 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+    android.libraryVariants.all { variant ->
+        if (variant.name.equalsIgnoreCase("release")) {
+            variant.outputs.all { output ->
+                def f = output.outputFileName
+                if (f != null && f.endsWith('.aar')) {
+                    Date nowTime = new Date()
+                    SimpleDateFormat time = new SimpleDateFormat("YYMMdd")
+                    output.outputFileName = "QzAlert_${defaultConfig.versionCode}_${time.format(nowTime)}.aar"
+                }
+            }
+        }
     }
 }
 

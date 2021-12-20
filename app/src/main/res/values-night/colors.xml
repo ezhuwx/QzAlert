@@ -6,9 +6,9 @@
     <color name="negative_color">#999999</color>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#000000</color>
-    <color name="colorLightPrimary">#000000</color>
+    <color name="colorAccent">#2269d3</color>
     <color name="list_bg" >#F5F5F5</color>
+    <color name="alert_bg">#333333</color>
     <color name="stroke">#cccccc</color>
     <color name="black_in_light_bg">#000000</color>
 </resources>
