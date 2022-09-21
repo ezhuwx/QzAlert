@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.ColorRes;
@@ -31,8 +32,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.ez.java.alert.databinding.FragmentBaseAlertBinding;
 
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import me.jessyan.autosize.utils.AutoSizeUtils;
 
@@ -83,7 +82,6 @@ public class QzAlertFragment extends DialogFragment {
     private boolean isPositiveButtonShow = false;
     private int layoutId = R.layout.fragment_base_alert;
     private OnAlertShowListener showListener;
-    private OnAlertDismissListener dismissListener;
     private int height = ViewGroup.LayoutParams.WRAP_CONTENT;
     private int width = 230;
     private boolean isFirstStart = false;
@@ -99,7 +97,7 @@ public class QzAlertFragment extends DialogFragment {
             initView();
         } else if (showListener != null) {
             contentView = inflater.inflate(getLayoutId(), container);
-            showListener.onShow(contentView, getDialog());
+            showListener.onShow(contentView, this);
         }
         return contentView;
     }
@@ -132,7 +130,6 @@ public class QzAlertFragment extends DialogFragment {
         }
         if (isShowEdit) {
             isKeyBoardShown = true;
-            openKeyboardDelay(contentView, this.context);
         }
     }
 
@@ -281,20 +278,14 @@ public class QzAlertFragment extends DialogFragment {
         }
     }
 
+
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {
-        new Handler(Looper.myLooper()).postDelayed(() -> {
-            QzAlertFragment.super.dismiss();
-            if (dismissListener != null) {
-                dismissListener.onDismiss();
-            }
-        }, 200);
+        super.onDismiss(dialog);
         if (isKeyBoardShown) {
-            closeKeyboard(contentView, this.context);
             isKeyBoardShown = false;
         }
     }
-
 
     /**
      * 设置标题并显示
@@ -397,18 +388,17 @@ public class QzAlertFragment extends DialogFragment {
     public void onViewClicked() {
         mBinding.alertLeftButtonTv.setOnClickListener(v -> {
             if (leftClickListener != null && FastClickUtil.isNotFastClick(v)) {
-                leftClickListener.onLeftClick(getDialog());
+                leftClickListener.onLeftClick(this);
             }
         });
         mBinding.alertMiddleButtonTv.setOnClickListener(v -> {
             if (middleClickListener != null && FastClickUtil.isNotFastClick(v)) {
-                middleClickListener.onMiddleClick(getDialog());
+                middleClickListener.onMiddleClick(this);
             }
         });
         mBinding.alertRightButtonTv.setOnClickListener(v -> {
             if (rightClickListener != null && FastClickUtil.isNotFastClick(v)) {
-                rightClickListener.onRightClick(getDialog(),
-                        mBinding.alertContentEt.getText().toString());
+                rightClickListener.onRightClick(this, mBinding.alertContentEt.getText().toString());
             }
         });
     }
@@ -437,11 +427,33 @@ public class QzAlertFragment extends DialogFragment {
         this.context = context;
     }
 
+
     @Override
     public void show(@NonNull FragmentManager manager, String tag) {
         FragmentTransaction ft = manager.beginTransaction();
         ft.add(this, tag);
         ft.commitAllowingStateLoss();
+        new Handler().postDelayed(() -> {
+            onShowEdit((ViewGroup) contentView);
+        }, 200);
+    }
+
+    @Override
+    public void dismiss() {
+        ViewGroup rootView = (ViewGroup) contentView;
+        View focusView = null;
+        for (int index = 0; index < rootView.getChildCount(); index++) {
+            View child = rootView.getChildAt(index);
+            if (child.hasFocus()) {
+                focusView = child;
+                break;
+            }
+        }
+        if (focusView != null) {
+            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+        }
+        new Handler().postDelayed(super::dismiss, focusView != null ? 200 : 0);
     }
 
 
@@ -611,7 +623,7 @@ public class QzAlertFragment extends DialogFragment {
         /**
          * Menu 左侧按钮点击回调
          */
-        void onLeftClick(Dialog dialog);
+        void onLeftClick(QzAlertFragment dialog);
 
     }
 
@@ -619,7 +631,7 @@ public class QzAlertFragment extends DialogFragment {
         /**
          * Menu 中间按钮点击回调
          */
-        void onMiddleClick(Dialog dialog);
+        void onMiddleClick(QzAlertFragment dialog);
 
     }
 
@@ -630,58 +642,38 @@ public class QzAlertFragment extends DialogFragment {
          *
          * @param content 输入内容
          */
-        void onRightClick(Dialog dialog, String content);
-    }
-
-    public QzAlertFragment setOnAlertShowListener(OnAlertShowListener showListener) {
-        this.showListener = showListener;
-        return this;
-    }
-
-    public QzAlertFragment setDismissListener(OnAlertDismissListener dismissListener) {
-        this.dismissListener = dismissListener;
-        return this;
+        void onRightClick(QzAlertFragment dialog, String content);
     }
 
     public interface OnAlertShowListener {
         /**
          * 显示监听
          *
-         * @param contentView 自定义布局
+         * @param contentView
+         * @param dialog
          */
-        void onShow(View contentView, DialogInterface dialog);
+        void onShow(View contentView, QzAlertFragment dialog);
     }
 
-    public interface OnAlertDismissListener {
-        /**
-         * 消失
-         */
-        void onDismiss();
-    }
 
-    public static void openKeyboard(View editText, Context context) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(editText, InputMethodManager.RESULT_SHOWN);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-    }
-
-    /**
-     * 避免 输入框为空，延迟后也会提高用户体验
-     */
-    public static void openKeyboardDelay(final View mEditText, final Context mContext) {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                openKeyboard(mEditText, mContext);
+    public void onShowEdit(ViewGroup rootView) {
+        View focusView = null;
+        for (int index = 0; index < rootView.getChildCount(); index++) {
+            View child = rootView.getChildAt(index);
+            if (child instanceof EditText && child.getVisibility() == View.VISIBLE) {
+                focusView = child;
+                break;
+            } else if (child instanceof ViewGroup) {
+                onShowEdit((ViewGroup) child);
             }
-        }, 100);
-    }
+        }
+        if (focusView != null) {
+            focusView.findFocus();
+            focusView.requestFocus();
+            focusView.requestFocusFromTouch();
+            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(focusView, InputMethodManager.SHOW_FORCED);
+        }
 
-    /**
-     * 关闭软键盘
-     */
-    public static void closeKeyboard(View editText, Context context) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 }
