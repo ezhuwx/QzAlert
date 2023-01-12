@@ -607,9 +607,10 @@ public class QzAlertFragment extends DialogFragment {
         return layoutId;
     }
 
-    public void setContentView(View contentView) {
+    public QzAlertFragment setContentView(View contentView) {
         this.isCustomView = true;
         this.contentView = contentView;
+        return this;
     }
 
     public QzAlertFragment setContentView(int layoutId) {
@@ -618,6 +619,10 @@ public class QzAlertFragment extends DialogFragment {
         return this;
     }
 
+    public QzAlertFragment setShowListener(OnAlertShowListener showListener) {
+        this.showListener = showListener;
+        return this;
+    }
 
     public interface OnLeftClickListener {
         /**
@@ -655,8 +660,7 @@ public class QzAlertFragment extends DialogFragment {
         void onShow(View contentView, QzAlertFragment dialog);
     }
 
-
-    public void onShowEdit(ViewGroup rootView) {
+    private void onShowEdit(ViewGroup rootView) {
         View focusView = null;
         for (int index = 0; index < rootView.getChildCount(); index++) {
             View child = rootView.getChildAt(index);
@@ -676,4 +680,6 @@ public class QzAlertFragment extends DialogFragment {
         }
 
     }
+
+
 }
