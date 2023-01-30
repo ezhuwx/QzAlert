@@ -467,6 +467,8 @@ public class QzAlertFragment extends DialogFragment {
                 imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
             }
             new Handler().postDelayed(super::dismiss, focusView != null ? 200 : 0);
+        } else {
+            super.dismiss();
         }
     }
 
