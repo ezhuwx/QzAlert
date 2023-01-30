@@ -92,6 +92,7 @@ public class QzAlertFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        initCreate();
         isFirstStart = true;
         if (!isCustomView) {
             mBinding = FragmentBaseAlertBinding.inflate(getLayoutInflater());
@@ -105,6 +106,9 @@ public class QzAlertFragment extends DialogFragment {
             }
         }
         return contentView;
+    }
+
+    protected void initCreate() {
     }
 
     @Override
@@ -138,7 +142,7 @@ public class QzAlertFragment extends DialogFragment {
         }
     }
 
-    private void onViewShow() {
+    protected void onViewShow() {
     }
 
     /**
