@@ -69,7 +69,7 @@ public class QzAlertFragment extends DialogFragment {
     private int editContentId = -1;
     private String editContent = "";
     private int gravity = Gravity.CENTER;
-    private View contentView;
+    protected View contentView;
     private boolean isAnimation = true;
     private boolean isShowEdit = false;
     private boolean isShowTitle = false;
@@ -82,10 +82,12 @@ public class QzAlertFragment extends DialogFragment {
     private boolean isPositiveButtonShow = false;
     private int layoutId = R.layout.fragment_base_alert;
     private OnAlertShowListener showListener;
-    private int height = ViewGroup.LayoutParams.WRAP_CONTENT;
-    private int width = 230;
+    protected int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    protected int width = 230;
     private boolean isFirstStart = false;
     private FragmentBaseAlertBinding mBinding;
+
+    protected int animationStyle = R.style.animate_dialog;
 
     @Nullable
     @Override
@@ -95,9 +97,12 @@ public class QzAlertFragment extends DialogFragment {
             mBinding = FragmentBaseAlertBinding.inflate(getLayoutInflater());
             contentView = mBinding.getRoot();
             initView();
-        } else if (showListener != null) {
+        } else {
             contentView = inflater.inflate(getLayoutId(), container);
-            showListener.onShow(contentView, this);
+            onViewShow();
+            if (showListener != null) {
+                showListener.onShow(contentView, this);
+            }
         }
         return contentView;
     }
@@ -122,7 +127,7 @@ public class QzAlertFragment extends DialogFragment {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             if (isAnimation) {
-                window.setWindowAnimations(R.style.animate_dialog);
+                window.setWindowAnimations(animationStyle);
             }
             int realWidth = width > 0 ? AutoSizeUtils.dp2px(requireContext(), width) : width;
             int realHeight = height > 0 ? AutoSizeUtils.dp2px(requireContext(), height) : height;
@@ -133,10 +138,13 @@ public class QzAlertFragment extends DialogFragment {
         }
     }
 
+    private void onViewShow() {
+    }
+
     /**
      * 初始化MepAlert基本配置
      */
-    private void initView() {
+    protected void initView() {
         if (getLayoutId() == R.layout.fragment_base_alert) {
             //默认参数
             title = title == null ? getString(R.string.warm_tip) : title;
@@ -433,27 +441,29 @@ public class QzAlertFragment extends DialogFragment {
         FragmentTransaction ft = manager.beginTransaction();
         ft.add(this, tag);
         ft.commitAllowingStateLoss();
-        new Handler().postDelayed(() -> {
-            onShowEdit((ViewGroup) contentView);
-        }, 200);
+        if (isShowEdit) {
+            new Handler().postDelayed(() -> onShowEdit((ViewGroup) contentView), 200);
+        }
     }
 
     @Override
     public void dismiss() {
-        ViewGroup rootView = (ViewGroup) contentView;
-        View focusView = null;
-        for (int index = 0; index < rootView.getChildCount(); index++) {
-            View child = rootView.getChildAt(index);
-            if (child.hasFocus()) {
-                focusView = child;
-                break;
+        if (isShowEdit) {
+            ViewGroup rootView = (ViewGroup) contentView;
+            View focusView = null;
+            for (int index = 0; index < rootView.getChildCount(); index++) {
+                View child = rootView.getChildAt(index);
+                if (child.hasFocus()) {
+                    focusView = child;
+                    break;
+                }
             }
+            if (focusView != null) {
+                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+            }
+            new Handler().postDelayed(super::dismiss, focusView != null ? 200 : 0);
         }
-        if (focusView != null) {
-            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
-        }
-        new Handler().postDelayed(super::dismiss, focusView != null ? 200 : 0);
     }
 
 
@@ -621,6 +631,11 @@ public class QzAlertFragment extends DialogFragment {
 
     public QzAlertFragment setShowListener(OnAlertShowListener showListener) {
         this.showListener = showListener;
+        return this;
+    }
+
+    public QzAlertFragment setAnimationStyle(int animationStyle) {
+        this.animationStyle = animationStyle;
         return this;
     }
 
