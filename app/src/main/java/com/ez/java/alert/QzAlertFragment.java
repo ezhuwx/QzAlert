@@ -1,14 +1,11 @@
 package com.ez.java.alert;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.view.Gravity;
@@ -68,6 +65,7 @@ public class QzAlertFragment extends DialogFragment {
     private int editMaxLength = -1;
     private int editContentId = -1;
     private String editContent = "";
+    private int contentGravity = Gravity.CENTER;
     private int gravity = Gravity.CENTER;
     protected View contentView;
     private boolean isAnimation = true;
@@ -128,6 +126,7 @@ public class QzAlertFragment extends DialogFragment {
         getDialog().setCanceledOnTouchOutside(cancelable);
         Window window = getDialog().getWindow();
         if (window != null) {
+            window.setGravity(gravity);
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             if (isAnimation) {
@@ -170,7 +169,7 @@ public class QzAlertFragment extends DialogFragment {
                 mBinding.alertContentTv.setVisibility(View.VISIBLE);
             }
             //Gravity
-            mBinding.alertContentTv.setGravity(gravity);
+            mBinding.alertContentTv.setGravity(contentGravity);
             /*显示编辑框*/
             if (isShowEdit) {
                 if (isShowContent) {
@@ -282,11 +281,12 @@ public class QzAlertFragment extends DialogFragment {
             mBinding.alertRightButtonTv.setText(rightMessageId == -1 ? rightMessage : context.getString(rightMessageId));
         } else {
             /*none*/
-            mBinding.alertLeftButtonTv.setVisibility(View.GONE);
             mBinding.alertMiddleButtonTv.setVisibility(View.GONE);
             mBinding.alertRightButtonTv.setVisibility(View.GONE);
-            mBinding.lineLeftV.setVisibility(View.GONE);
+            mBinding.alertLeftButtonTv.setVisibility(View.GONE);
+            mBinding.alertButtonV.setVisibility(View.GONE);
             mBinding.lineRightV.setVisibility(View.GONE);
+            mBinding.lineLeftV.setVisibility(View.GONE);
         }
     }
 
@@ -416,10 +416,14 @@ public class QzAlertFragment extends DialogFragment {
     }
 
     public QzAlertFragment setContentGravity(int gravity) {
-        this.gravity = gravity;
+        this.contentGravity = gravity;
         return this;
     }
 
+    public QzAlertFragment setGravity(int gravity) {
+        this.gravity = gravity;
+        return this;
+    }
 
     /**
      * 显示
