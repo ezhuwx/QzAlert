@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 31
-        versionCode 2020
+        versionCode 2021
         versionName "0.2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,9 +29,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    android.libraryVariants.all { variant ->
+    android.libraryVariants.configureEach { variant ->
         if (variant.name.equalsIgnoreCase("release")) {
-            variant.outputs.all { output ->
+            variant.outputs.configureEach { output ->
                 def f = output.outputFileName
                 if (f != null && f.endsWith('.aar')) {
                     Date nowTime = new Date()

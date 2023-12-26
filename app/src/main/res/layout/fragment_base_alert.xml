@@ -79,8 +79,9 @@
             android:background="@drawable/circle_gray_solid_bg"
             android:gravity="center"
             android:text="@string/chance"
+            android:includeFontPadding="false"
             android:textColor="@color/content_gray"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:visibility="visible" />
 
 
@@ -93,10 +94,11 @@
             android:layout_weight="1"
             android:background="@drawable/circle_blue_solid_bg"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="@string/iknown"
             android:textColor="@color/white"
-            android:textSize="14sp"
-            android:visibility="gone" />
+            android:textSize="13sp"
+            android:visibility="visible" />
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -108,9 +110,10 @@
             android:layout_weight="1"
             android:background="@drawable/circle_blue_solid_bg"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="@string/confirm_name"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:visibility="visible" />
     </LinearLayout>
 
