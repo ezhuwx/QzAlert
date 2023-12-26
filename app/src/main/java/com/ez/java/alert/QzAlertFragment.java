@@ -2,6 +2,7 @@ package com.ez.java.alert;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,12 +16,15 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -81,7 +85,7 @@ public class QzAlertFragment extends DialogFragment {
     private int layoutId = R.layout.fragment_base_alert;
     private OnAlertShowListener showListener;
     protected int height = ViewGroup.LayoutParams.WRAP_CONTENT;
-    protected int width = 230;
+    protected int width = 280;
     private boolean isFirstStart = false;
     private FragmentBaseAlertBinding mBinding;
 
@@ -213,83 +217,70 @@ public class QzAlertFragment extends DialogFragment {
     private void setButtonShow() {
         if (isNegativeButtonShow && !isNatureButtonShow && !isPositiveButtonShow) {
             /*left*/
-            mBinding.alertLeftButtonTv.setTextColor(leftColor != -1
-                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.positive_color));
+            onSetBackgroundTint(mBinding.alertLeftButtonTv, leftColor, R.color.positive_color);
             mBinding.alertLeftButtonTv.setText(leftMessageId == -1 ? leftMessage : context.getString(leftMessageId));
             mBinding.alertMiddleButtonTv.setVisibility(View.GONE);
             mBinding.alertRightButtonTv.setVisibility(View.GONE);
-            mBinding.lineLeftV.setVisibility(View.GONE);
-            mBinding.lineRightV.setVisibility(View.GONE);
         } else if (!isNegativeButtonShow && isNatureButtonShow && !isPositiveButtonShow) {
             /*middle*/
-            mBinding.alertMiddleButtonTv.setTextColor(middleColor != -1
-                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.positive_color));
+            onSetBackgroundTint(mBinding.alertMiddleButtonTv, middleColor, R.color.positive_color);
             mBinding.alertMiddleButtonTv.setText(middleMessageId == -1 ? middleMessage : context.getString(middleMessageId));
             mBinding.alertLeftButtonTv.setVisibility(View.GONE);
             mBinding.alertRightButtonTv.setVisibility(View.GONE);
-            mBinding.lineLeftV.setVisibility(View.GONE);
-            mBinding.lineRightV.setVisibility(View.GONE);
         } else if (!isNegativeButtonShow && !isNatureButtonShow && isPositiveButtonShow) {
             /*right*/
-            mBinding.alertRightButtonTv.setTextColor(rightColor != -1
-                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.positive_color));
+            onSetBackgroundTint(mBinding.alertRightButtonTv, rightColor, R.color.positive_color);
             mBinding.alertRightButtonTv.setText(rightMessageId == -1 ? rightMessage : context.getString(rightMessageId));
             mBinding.alertMiddleButtonTv.setVisibility(View.GONE);
             mBinding.alertLeftButtonTv.setVisibility(View.GONE);
-            mBinding.lineLeftV.setVisibility(View.GONE);
-            mBinding.lineRightV.setVisibility(View.GONE);
         } else if (isNegativeButtonShow && isNatureButtonShow && !isPositiveButtonShow) {
             /*left & middle*/
-            mBinding.alertLeftButtonTv.setTextColor(leftColor != -1
-                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.negative_color));
+            onSetBackgroundTint(mBinding.alertLeftButtonTv, leftColor, R.color.negative_color);
             mBinding.alertLeftButtonTv.setText(leftMessageId == -1 ? leftMessage : context.getString(leftMessageId));
-            mBinding.alertMiddleButtonTv.setTextColor(middleColor != -1
-                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.positive_color));
+            onSetBackgroundTint(mBinding.alertMiddleButtonTv, middleColor, R.color.positive_color);
             mBinding.alertMiddleButtonTv.setText(middleMessageId == -1 ? middleMessage : context.getString(middleMessageId));
             mBinding.alertRightButtonTv.setVisibility(View.GONE);
-            mBinding.lineRightV.setVisibility(View.GONE);
         } else if (isNegativeButtonShow && !isNatureButtonShow) {
             /*left & right*/
-            mBinding.alertLeftButtonTv.setTextColor(leftColor != -1
-                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.negative_color));
+            onSetBackgroundTint(mBinding.alertLeftButtonTv, leftColor, R.color.negative_color);
             mBinding.alertLeftButtonTv.setText(leftMessageId == -1 ? leftMessage : context.getString(leftMessageId));
-            mBinding.alertRightButtonTv.setTextColor(rightColor != -1
-                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.positive_color));
+            onSetBackgroundTint(mBinding.alertRightButtonTv, rightColor, R.color.positive_color);
             mBinding.alertRightButtonTv.setText(rightMessageId == -1 ? rightMessage : context.getString(rightMessageId));
             mBinding.alertMiddleButtonTv.setVisibility(View.GONE);
-            mBinding.lineRightV.setVisibility(View.GONE);
         } else if (!isNegativeButtonShow && isNatureButtonShow) {
             /*middle right*/
-            mBinding.alertMiddleButtonTv.setTextColor(middleColor != -1
-                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.negative_color));
+            onSetBackgroundTint(mBinding.alertMiddleButtonTv, middleColor, R.color.negative_color);
             mBinding.alertMiddleButtonTv.setText(middleMessageId == -1 ? middleMessage : context.getString(middleMessageId));
-            mBinding.alertRightButtonTv.setTextColor(rightColor != -1
-                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.positive_color));
+            onSetBackgroundTint(mBinding.alertRightButtonTv, rightColor, R.color.positive_color);
             mBinding.alertRightButtonTv.setText(rightMessageId == -1 ? rightMessage : context.getString(rightMessageId));
             mBinding.alertLeftButtonTv.setVisibility(View.GONE);
-            mBinding.lineRightV.setVisibility(View.GONE);
         } else if (isNegativeButtonShow) {
             /*left middle right*/
-            mBinding.alertLeftButtonTv.setTextColor(leftColor != -1
-                    ? getResources().getColor(leftColor) : getResources().getColor(R.color.negative_color));
+            onSetBackgroundTint(mBinding.alertLeftButtonTv, leftColor, R.color.negative_color);
             mBinding.alertLeftButtonTv.setText(leftMessageId == -1 ? leftMessage : context.getString(leftMessageId));
-            mBinding.alertMiddleButtonTv.setTextColor(middleColor != -1
-                    ? getResources().getColor(middleColor) : getResources().getColor(R.color.positive_color));
+            onSetBackgroundTint(mBinding.alertMiddleButtonTv, middleColor, R.color.positive_color);
             mBinding.alertMiddleButtonTv.setText(middleMessageId == -1 ? middleMessage : context.getString(middleMessageId));
-            mBinding.alertRightButtonTv.setTextColor(rightColor != -1
-                    ? getResources().getColor(rightColor) : getResources().getColor(R.color.positive_color));
+            onSetBackgroundTint(mBinding.alertRightButtonTv, rightColor, R.color.positive_color);
             mBinding.alertRightButtonTv.setText(rightMessageId == -1 ? rightMessage : context.getString(rightMessageId));
         } else {
             /*none*/
             mBinding.alertMiddleButtonTv.setVisibility(View.GONE);
             mBinding.alertRightButtonTv.setVisibility(View.GONE);
             mBinding.alertLeftButtonTv.setVisibility(View.GONE);
-            mBinding.alertButtonV.setVisibility(View.GONE);
-            mBinding.lineRightV.setVisibility(View.GONE);
-            mBinding.lineLeftV.setVisibility(View.GONE);
         }
     }
 
+    /**
+     * 设置背景色
+     *
+     * @param bt           按键
+     * @param colorId      颜色
+     * @param defaultColor 默认颜色
+     */
+    private void onSetBackgroundTint(Button bt, int colorId, int defaultColor) {
+        bt.setBackgroundTintList(AppCompatResources.getColorStateList(requireContext()
+                , colorId != -1 ? colorId : defaultColor));
+    }
 
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {

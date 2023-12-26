@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="230dp"
+    android:layout_width="280dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/alert_fragment_bg"
-    android:maxHeight="510dp"
-    tools:ignore="SpUsage">
+    android:elevation="2dp"
+    android:maxHeight="510dp">
 
     <TextView
         android:id="@+id/alert_title_tv"
@@ -15,9 +15,11 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:text="@string/warm_tip"
+        tools:visibility="visible" />
 
     <RelativeLayout
         android:id="@+id/alert_content_rl"
@@ -35,10 +37,10 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:gravity="center"
-            android:text="@string/appbar_scrolling_view_behavior"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:visibility="visible" />
+            android:textSize="15sp"
+            android:visibility="visible"
+            tools:text="是否确认退出本应用?" />
 
         <EditText
             android:id="@+id/alert_content_et"
@@ -59,60 +61,57 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <View
-        android:id="@+id/alert_button_v"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/alert_content_rl"
-        android:background="@color/stroke" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/alert_button_v"
-        android:orientation="horizontal">
+        android:layout_below="@+id/alert_content_rl"
+        android:orientation="horizontal"
+        android:paddingHorizontal="15dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/alert_left_button_tv"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="15dp"
             android:layout_weight="1"
+            android:background="@drawable/circle_gray_solid_bg"
             android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@color/negative_color"
-            android:textSize="14sp" />
+            android:text="@string/chance"
+            android:textColor="@color/content_gray"
+            android:textSize="14sp"
+            android:visibility="visible" />
 
-        <View
-            android:id="@+id/line_left_v"
-            android:layout_width="1dp"
-            android:layout_height="40dp"
-            android:background="@color/stroke" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/alert_middle_button_tv"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="15dp"
             android:layout_weight="1"
+            android:background="@drawable/circle_blue_solid_bg"
             android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@color/positive_color"
-            android:textSize="14sp" />
+            android:text="@string/iknown"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone" />
 
-        <View
-            android:id="@+id/line_right_v"
-            android:layout_width="1dp"
-            android:layout_height="40dp"
-            android:background="@color/stroke" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/alert_right_button_tv"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="15dp"
             android:layout_weight="1"
+            android:background="@drawable/circle_blue_solid_bg"
             android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@color/positive_color"
-            android:textSize="14sp" />
+            android:text="@string/confirm_name"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="visible" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -3,7 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="positive_color">#2269d3</color>
-    <color name="negative_color">#999999</color>
+    <color name="negative_color">#f8f8f8</color>
     <color name="colorPrimary">#007eff</color>
     <color name="colorPrimaryDark">#2269d3</color>
     <color name="colorAccent">#2269d3</color>
@@ -12,4 +12,5 @@
     <color name="stroke">#cccccc</color>
     <color name="white_in_deep_bg">#ffffff</color>
     <color name="black_in_light_bg">#000000</color>
+    <color name="content_gray">#999999</color>
 </resources>
